@@ -19,3 +19,5 @@ MonoBehaviour:
   - {fileID: 2402415582554515247, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
   - {fileID: 8304950708062100032, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
   timeBetweenStages: 10
+  price: 30
+  icon: {fileID: -1322868838983756743, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
