@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5324250639121926118}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8417336838816990672}
+        m_TargetAssemblyTypeName: PlantItem, Assembly-CSharp
+        m_MethodName: BuyPlant
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2457453396335769376
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,9 +611,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlantItem
   plant: {fileID: 11400000, guid: c1ea64ce990043f41a33deba70227fb6, type: 2}
-  nameTxt: {fileID: 0}
-  priceTxt: {fileID: 0}
-  icon: {fileID: 0}
+  nameTxt: {fileID: 6102968555575476773}
+  priceTxt: {fileID: 661650809912831639}
+  icon: {fileID: 1356589188671537700}
+  btnImage: {fileID: 5324250639121926118}
+  btnTxt: {fileID: 5800440498462145164}
 --- !u!1 &8965326967691568198
 GameObject:
   m_ObjectHideFlags: 0
