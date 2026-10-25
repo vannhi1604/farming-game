@@ -248,7 +248,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0c31b1b94e96641bcfd379f1b97cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlotManager
-  selectedPlant: {fileID: 11400000, guid: dad9e19bbaf097546a2f1afd15b8cc90, type: 2}
+  availableColor: {r: 0, g: 1, b: 0, a: 1}
+  unavailableColor: {r: 1, g: 0, b: 0, a: 1}
+  isBought: 1
+  drySprite: {fileID: -939494641437605497, guid: 7183bb8df7eaf8e4fbfae8ccf25625ee, type: 3}
+  normalSprite: {fileID: -1167222277155119612, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
+  unavailableSprite: {fileID: -5737574994739756139, guid: 7183bb8df7eaf8e4fbfae8ccf25625ee, type: 3}
 --- !u!114 &1675377087273803818
 MonoBehaviour:
   m_ObjectHideFlags: 0

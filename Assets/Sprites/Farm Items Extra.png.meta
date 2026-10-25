@@ -124,7 +124,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Farm Items Extra_0
+      name: Plot_dry
       rect:
         serializedVersion: 2
         x: 0
@@ -146,7 +146,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_1
+      name: Plot_locked
       rect:
         serializedVersion: 2
         x: 689
@@ -168,7 +168,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_2
+      name: Tool_normal
       rect:
         serializedVersion: 2
         x: 1399
@@ -190,7 +190,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_3
+      name: Tool_selected
       rect:
         serializedVersion: 2
         x: 1399
@@ -212,7 +212,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_4
+      name: DryPlant_1
       rect:
         serializedVersion: 2
         x: 0
@@ -234,7 +234,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_5
+      name: DryPlant_2
       rect:
         serializedVersion: 2
         x: 359
@@ -256,7 +256,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_6
+      name: Water_icon
       rect:
         serializedVersion: 2
         x: 879
@@ -278,7 +278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_7
+      name: Fertilizer_icon
       rect:
         serializedVersion: 2
         x: 1169
@@ -300,10 +300,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Farm Items Extra_8
+      name: BuyPlot_icon
       rect:
         serializedVersion: 2
-        x: 1439
+        x: 1438
         y: 41
         width: 142
         height: 162
@@ -335,15 +335,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Farm Items Extra_0: -939494641437605497
-      Farm Items Extra_1: -5737574994739756139
-      Farm Items Extra_2: 7122359577590926976
-      Farm Items Extra_3: -7187093165402134859
-      Farm Items Extra_4: -4943352394623894318
-      Farm Items Extra_5: -6722333681955717557
-      Farm Items Extra_6: 7938416930045131424
-      Farm Items Extra_7: -8316101745795507760
-      Farm Items Extra_8: -364341601124185504
+      BuyPlot_icon: -364341601124185504
+      DryPlant_1: -4943352394623894318
+      DryPlant_2: -6722333681955717557
+      Fertilizer_icon: -8316101745795507760
+      Plot_dry: -939494641437605497
+      Plot_locked: -5737574994739756139
+      Tool_normal: 7122359577590926976
+      Tool_selected: -7187093165402134859
+      Water_icon: 7938416930045131424
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

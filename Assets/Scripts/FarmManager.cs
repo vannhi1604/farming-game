@@ -1,16 +1,25 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class FarmManager : MonoBehaviour
 {
     public PlantItem selectedPlant;
     public bool isPlanting = false;
     //initial money
-    //if the value isn't reflected in inspector after changing this reset the script in inspector
-    //(remember to reattach currency text)
+    //if the value isn't reflected in inspector after changing this change it in the inspector or
+    //reset the script in inspector (remember to reattach components)
     public int money = 100;
     public TMP_Text moneyTxt;
+    //plot prcing
+    int basePlotPrice = 150;
+    public int currentPlotPrice = 150;
+    const double growthRate = 0.35;
+    int step = 1;
+    public TMP_Text plotPriceTxt;
 
     public Color buyColor = Color.green;
     public Color cancelColor = Color.red;
@@ -26,6 +35,7 @@ public class FarmManager : MonoBehaviour
     void Start()
     {
         moneyTxt.text = "$" + money;
+        plotPriceTxt.text = "$" + currentPlotPrice;
     }
 
     // Update is called once per frame
@@ -97,5 +107,14 @@ public class FarmManager : MonoBehaviour
     {
         money += value;
         moneyTxt.text = "$" + money;
+    }
+
+    //0.30: 150, 195, 255, 330, 430, 560, 725, 945, 1225, 1595, 2070, 2690, 3495
+    //(current) 0.35: 150, 205, 275, 370, 500, 675, 910, 1230, 1655, 2235, 3020, 4075, 5500
+    public void increasePlotPrice()
+    {
+        currentPlotPrice = (int)(System.Math.Ceiling(basePlotPrice * System.Math.Pow(1 + growthRate, step) / 5) * 5);
+        step++;
+        plotPriceTxt.text = "$" + currentPlotPrice;
     }
 }

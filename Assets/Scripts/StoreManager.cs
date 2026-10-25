@@ -6,6 +6,8 @@ public class StoreManager : MonoBehaviour
 {
     public GameObject plantItem;
     List<PlantObject> plantObjects = new List<PlantObject>();
+
+    public const int fertilizerPrice = 10;
     private void Awake()
     {
         var loadedPlants = Resources.LoadAll("Plants", typeof(PlantObject));
