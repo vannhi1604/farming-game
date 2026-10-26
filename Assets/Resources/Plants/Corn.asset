@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlantObject
   plantName: Corn
   plantStages:
-  - {fileID: -2243732589849547616, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
-  - {fileID: 4506980375917697221, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
-  - {fileID: 6205673657870114336, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
-  - {fileID: 6881750370916773083, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
-  timeBetweenStages: 2
+  - {fileID: -8463751307097313094, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  - {fileID: -7017202247838496533, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  - {fileID: 3389359819911840689, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  - {fileID: 1422315464979349157, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  - {fileID: 2409062927273309327, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  timeBetweenStages: 17
   buyPrice: 10
   sellPrice: 20
-  icon: {fileID: -8344284950600746447, guid: 4e746436af241584a99bcb64a0e56ba7, type: 3}
+  icon: {fileID: 8407463422439536261, guid: c654ac2d9b382504e8fb98ebd7b35ff6, type: 3}
   dryPlanted: {fileID: -4943352394623894318, guid: 7183bb8df7eaf8e4fbfae8ccf25625ee, type: 3}

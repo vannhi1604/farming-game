@@ -7,7 +7,9 @@ public class PlantItem : MonoBehaviour
     public PlantObject plant;
 
     public TMP_Text nameTxt;
-    public TMP_Text priceTxt;
+    public TMP_Text buyPriceTxt;
+    public TMP_Text sellPriceTxt;
+    public TMP_Text totalTimeTxt;
     public Image icon;
 
     public Image btnImage;
@@ -31,7 +33,9 @@ public class PlantItem : MonoBehaviour
     void InitializeUI()
     {
         nameTxt.text = plant.plantName;
-        priceTxt.text = "$" + plant.buyPrice;
+        buyPriceTxt.text = "Buy:  $" + plant.buyPrice;
+        sellPriceTxt.text = "Sell: $" + plant.sellPrice;
+        totalTimeTxt.text = plant.timeBetweenStages * (plant.plantStages.Length - 1) + "s";
         icon.sprite = plant.icon;
     }
 }

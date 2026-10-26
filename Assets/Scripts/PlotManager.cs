@@ -205,7 +205,9 @@ public class PlotManager : MonoBehaviour
         fm.Transaction(-selectedPlant.buyPrice);
         plantStage = 0;
         UpdatePlant(); //update sprite to match
+        //set up timer
         timer = selectedPlant.timeBetweenStages;
+
         plant.gameObject.SetActive(true);
     }
 

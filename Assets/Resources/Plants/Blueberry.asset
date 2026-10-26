@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fccd532c2dd6b8499e68679133a0d26, type: 3}
+  m_Name: Blueberry
+  m_EditorClassIdentifier: Assembly-CSharp::PlantObject
+  plantName: Blueberry
+  plantStages:
+  - {fileID: -3793080494866812935, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  - {fileID: 7519021465560718109, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  - {fileID: 5808869252666709706, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  - {fileID: -7652076332135382777, guid: d489b3816afe8bf499aed2972cb7595f, type: 3}
+  timeBetweenStages: 80
+  buyPrice: 10
+  sellPrice: 10
+  icon: {fileID: 6707489027588672484, guid: c654ac2d9b382504e8fb98ebd7b35ff6, type: 3}
+  dryPlanted: {fileID: -4943352394623894318, guid: 7183bb8df7eaf8e4fbfae8ccf25625ee, type: 3}
