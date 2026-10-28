@@ -63,14 +63,15 @@ public class PlotManager : MonoBehaviour
                 //plant dies if not watered before it reaches the next stage (and if not at the first stage
                 //so that multiple plants can be planted then watered at once without the time constraint 
                 //caused by this)
+                //TODO: when pests and weeds are implemented check for dryness pests and weeds at once here
                 if (isDry)
                 {
                     if (plantStage != 0)
                     {
-                        plant.color = deadPlantColor;
-                        hasDeadPlant = true;
+                        KillPlant();
                     }
-                    //else if at first stage plant just doesn't grow
+                    //else if not watered first stage plant just doesn't grow (pests and weeds won't appear
+                    //in first stage)
                 }
                 else
                 {
@@ -84,20 +85,42 @@ public class PlotManager : MonoBehaviour
                         plot.sprite = drySprite;
                         sm.ChangeWaterIconDisplay(true);
                     }
+                    //TODO: when pests and weeds are implemented apply them the same way here, just give them
+                    //different rng varibles so they appear independant of each other
+                    //and toggle extra sprites along with status icons
                 }
             }
         }
     }
 
     private void OnMouseDown() {
+        //harvesting / removing dead plants will override tools (tools get deselected, effects not appiled,
+        //no money deducted if tool costs money since there's no effect applied)
         if (isPlanted)
         {
             //harvesting is only done if plant is at its last stage, this will also deselect any tool / plant
             //currently selected
+            //plants selected will not go over this like when removing dead plants
             if (plantStage == selectedPlant.plantStages.Length - 1)
             {
                 fm.ResetSelection();
                 Harvest();
+                return;
+            }
+            //if the plant is dead, reset plot and deselect all tools
+            //or plant if there's a plant selected and enough money
+            else if (hasDeadPlant)
+            {
+                ResetPlot();
+
+                if (fm.isPlanting && fm.selectedPlant.plant.buyPrice <= fm.money)
+                {
+                    Plant(fm.selectedPlant.plant);
+                }
+                else
+                {
+                    fm.ResetSelection();
+                }
                 return;
             }
         }
@@ -112,25 +135,19 @@ public class PlotManager : MonoBehaviour
             {
                 //water
                 case 1:
-                    if (isBought && !hasDeadPlant)
+                    if (isBought)
                     {
                         isDry = false;
                         plot.sprite = normalSprite;
                         sm.ChangeWaterIconDisplay(false);
-                        //change plot sprite instead of updating the plant
-                        //if (isPlanted)
-                        //{
-
-                        //    UpdatePlant();
-                        //}
                     }
                     break;
-                //fertilizer
+                //herbicide
                 case 2:
-                    if (fm.money >= StoreManager.fertilizerPrice && isBought && !hasDeadPlant)
+                    if (isBought && isPlanted && fm.money >= StoreManager.herbicidePrice)
                     {
-                        fm.Transaction(-StoreManager.fertilizerPrice);
-                        if (speed < 2) speed += .2f;
+                        fm.Transaction(-StoreManager.herbicidePrice);
+                        //TODO: apply herbicide effect here
                     }
                     break;
                 //unlock new plot
@@ -144,6 +161,14 @@ public class PlotManager : MonoBehaviour
                         isDry = true;
                     }
                     break;
+                //pesticide
+                case 4:
+                    if (isBought && isPlanted && fm.money >= StoreManager.pesticidePrice)
+                    {
+                        fm.Transaction(-StoreManager.pesticidePrice);
+                        //TODO: apply pesticide effect here
+                    }
+                    break;
                 default:
                     break;
             }
@@ -151,16 +176,25 @@ public class PlotManager : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        if (isPlanted && plantStage == selectedPlant.plantStages.Length - 1)
+        if (isPlanted)
         {
-            plot.color = harvestColor;
+            if (plantStage == selectedPlant.plantStages.Length - 1)
+            {
+                plot.color = harvestColor;
+                return;
+            }
+            else if (hasDeadPlant)
+            {
+                plot.color = availableColor;
+                return;
+            }
         }
         //if selecting a plant
-        else if (fm.isPlanting)
+        if (fm.isPlanting)
         {
-            //if plot is locked / already have a plant / there isn't enough money (since money is only deducted when 
-            //actually planting) give a visual indicator
-            if (!isBought || isPlanted || fm.selectedPlant.plant.buyPrice > fm.money)
+            //if plot is locked / already have a plant that isn't dead / there isn't enough money (since
+            //money is only deducted when actually planting) give a visual indicator
+            if (!isBought || (isPlanted && !hasDeadPlant) || fm.selectedPlant.plant.buyPrice > fm.money)
             {
                 plot.color = unavailableColor;
             }
@@ -170,7 +204,7 @@ public class PlotManager : MonoBehaviour
             }
         }
         //if selecting a tool
-        else if (fm.isSelecting)
+        if (fm.isSelecting)
         {
             switch(fm.selectedTool)
             {
@@ -185,9 +219,9 @@ public class PlotManager : MonoBehaviour
                         plot.color = unavailableColor;
                     }
                     break;
-                //fertilizer
+                //herbicide (can't be used on empty plot)
                 case 2:
-                    if (isBought && fm.money >= StoreManager.fertilizerPrice)
+                    if (isBought && isPlanted && fm.money >= StoreManager.herbicidePrice)
                     {
                         plot.color = availableColor;
                     }
@@ -207,6 +241,17 @@ public class PlotManager : MonoBehaviour
                         plot.color = unavailableColor;
                     }
                     break;
+                //pesticide (can't be used on empty plot)
+                case 4:
+                    if (isBought && isPlanted && fm.money >= StoreManager.pesticidePrice)
+                    {
+                        plot.color = availableColor;
+                    }
+                    else
+                    {
+                        plot.color = unavailableColor;
+                    }
+                    break;
                 default:
                     plot.color = unavailableColor;
                     break;
@@ -218,17 +263,27 @@ public class PlotManager : MonoBehaviour
         //reset plot color when leaving
         plot.color = Color.white;
     }
-    void Harvest()
+    void ResetPlot()
     {
         isPlanted = false;
+        hasDeadPlant = false;
+        plant.color = Color.white;
         plant.gameObject.SetActive(false);
-        fm.Transaction(selectedPlant.sellPrice);
-        //change the plot back to its dry state
+        //set plot back to dry
+        //TODO: when pests and weeds are implemented change their status here like with isDry
         isDry = true;
         plot.sprite = drySprite;
+        //remove all statuses
+        sm.ChangeWaterIconDisplay(false);
+        sm.ChangePestIconDisplay(false);
+        sm.ChangeWeedIconDisplay(false);
         //reset stats back to default
-        speed = 1f;
         dryStage = -1;
+    }
+    void Harvest()
+    {
+        ResetPlot();
+        fm.Transaction(selectedPlant.sellPrice);
     }
     void Plant(PlantObject newPlant)
     {
@@ -261,5 +316,11 @@ public class PlotManager : MonoBehaviour
         //always in the middle
         plantCollider.size = plant.sprite.bounds.size;
         plantCollider.offset = new Vector2(0, plant.bounds.size.y / 2);
+    }
+
+    void KillPlant()
+    {
+        plant.color = deadPlantColor;
+        hasDeadPlant = true;
     }
 }

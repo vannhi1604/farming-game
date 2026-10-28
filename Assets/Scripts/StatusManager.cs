@@ -24,21 +24,27 @@ public class StatusManager : MonoBehaviour
     public void ChangeWaterIconDisplay(bool status)
     {
         waterIcon.SetActive(status);
-
-        waterIcon.transform.position = new Vector3(
-            waterIcon.transform.position.x,
-            plant.bounds.max.y + yOffset,
-            waterIcon.transform.position.z
-        );
+        AdjustPosition(waterIcon);
     }
 
     public void ChangePestIconDisplay(bool status)
     {
         pestIcon.SetActive(status);
+        AdjustPosition(pestIcon);
     }
 
     public void ChangeWeedIconDisplay(bool status)
     {
         weedIcon.SetActive(status);
+        AdjustPosition(weedIcon);
+    }
+
+    void AdjustPosition(GameObject icon)
+    {
+        icon.transform.position = new Vector3(
+            icon.transform.position.x,
+            plant.bounds.max.y + yOffset,
+            icon.transform.position.z
+        );
     }
 }
