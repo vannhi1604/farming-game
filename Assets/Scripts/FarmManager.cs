@@ -20,7 +20,7 @@ public class FarmManager : MonoBehaviour
     const double growthRate = 0.35;
     int step = 1;
     public TMP_Text plotPriceTxt;
-
+    //for shop buttons
     public Color buyColor = Color.green;
     public Color cancelColor = Color.red;
 
@@ -78,7 +78,7 @@ public class FarmManager : MonoBehaviour
 
     //reset all selections to make sure the player can only either plant or use a tool at a time since this
     //will be called for every selection
-    void ResetSelection()
+    public void ResetSelection()
     {
         if (isPlanting)
         {

@@ -4,15 +4,21 @@ public class PlotManager : MonoBehaviour
 {
     //plant
     bool isPlanted = false;
+    bool hasDeadPlant = false;
     SpriteRenderer plant;
     BoxCollider2D plantCollider;
     int plantStage = 0;
+    //stage where the plant dries out, will be set when planting
+    int dryStage;
     float timer;
     float speed = 1f;
 
-    //buy / select button
+    //visual indicator
     public Color availableColor = Color.green;
     public Color unavailableColor = Color.red;
+    public Color harvestColor = Color.gold;
+    public Color deadPlantColor = Color.brown; //this is a bit too dark
+    StatusManager sm;
 
     //plot
     SpriteRenderer plot;
@@ -32,6 +38,7 @@ public class PlotManager : MonoBehaviour
         plant = transform.GetChild(0).GetComponent<SpriteRenderer>();
         plantCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         fm = transform.parent.GetComponent<FarmManager>();
+        sm = GetComponent<StatusManager>();
         plot = GetComponent<SpriteRenderer>();
         if (!isBought)
         {
@@ -46,23 +53,38 @@ public class PlotManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if theres a plant and the plot is damp activate timer and increase plantStage until harvest\
-        //currently time to wait till harvest is quite short and after the initial watering it's set till
-        //harvest
-        //maybe kill the plant if not watered after a certain amount of time as well (just add a brownish
-        //overlay over the current sprite? and give no money when harvested)
-        //but that would require multiple waterings over the lifespan
-        //and when the plant becomes tall enough it's really cluttered making it hard to see which plot is
-        //dry
-        if (isPlanted && !isDry)
+        //if there's a plant and it can still grow activate timer and increase plantStage
+        if (isPlanted && !hasDeadPlant)
         {
             timer -= speed * Time.deltaTime;
 
             if (timer < 0 && plantStage < selectedPlant.plantStages.Length - 1)
             {
-                timer = selectedPlant.timeBetweenStages;
-                plantStage++;
-                UpdatePlant();
+                //plant dies if not watered before it reaches the next stage (and if not at the first stage
+                //so that multiple plants can be planted then watered at once without the time constraint 
+                //caused by this)
+                if (isDry)
+                {
+                    if (plantStage != 0)
+                    {
+                        plant.color = deadPlantColor;
+                        hasDeadPlant = true;
+                    }
+                    //else if at first stage plant just doesn't grow
+                }
+                else
+                {
+                    timer = selectedPlant.timeBetweenStages;
+                    plantStage++;
+                    UpdatePlant();
+                    //dry out the plot when the designated stage is reached
+                    if (plantStage == dryStage)
+                    {
+                        isDry = true;
+                        plot.sprite = drySprite;
+                        sm.ChangeWaterIconDisplay(true);
+                    }
+                }
             }
         }
     }
@@ -70,14 +92,17 @@ public class PlotManager : MonoBehaviour
     private void OnMouseDown() {
         if (isPlanted)
         {
-            //harvesting is only done if plant is at its last stage and there's no plant / tool selected
-            if (plantStage == selectedPlant.plantStages.Length - 1 && !fm.isPlanting && !fm.isSelecting)
+            //harvesting is only done if plant is at its last stage, this will also deselect any tool / plant
+            //currently selected
+            if (plantStage == selectedPlant.plantStages.Length - 1)
             {
+                fm.ResetSelection();
                 Harvest();
+                return;
             }
         }
         //only plant if plot is unlocked, there's a plant selected already and there's enough money to buy it
-        else if (isBought && fm.isPlanting && fm.selectedPlant.plant.buyPrice <= fm.money)
+        else if (fm.isPlanting && isBought && fm.selectedPlant.plant.buyPrice <= fm.money)
         {
             Plant(fm.selectedPlant.plant);
         }
@@ -87,19 +112,22 @@ public class PlotManager : MonoBehaviour
             {
                 //water
                 case 1:
-                    if (isBought)
+                    if (isBought && !hasDeadPlant)
                     {
                         isDry = false;
                         plot.sprite = normalSprite;
-                        if (isPlanted)
-                        {
-                            UpdatePlant();
-                        }
+                        sm.ChangeWaterIconDisplay(false);
+                        //change plot sprite instead of updating the plant
+                        //if (isPlanted)
+                        //{
+
+                        //    UpdatePlant();
+                        //}
                     }
                     break;
                 //fertilizer
                 case 2:
-                    if (fm.money >= StoreManager.fertilizerPrice && isBought)
+                    if (fm.money >= StoreManager.fertilizerPrice && isBought && !hasDeadPlant)
                     {
                         fm.Transaction(-StoreManager.fertilizerPrice);
                         if (speed < 2) speed += .2f;
@@ -123,8 +151,12 @@ public class PlotManager : MonoBehaviour
     }
     private void OnMouseOver()
     {
+        if (isPlanted && plantStage == selectedPlant.plantStages.Length - 1)
+        {
+            plot.color = harvestColor;
+        }
         //if selecting a plant
-        if (fm.isPlanting)
+        else if (fm.isPlanting)
         {
             //if plot is locked / already have a plant / there isn't enough money (since money is only deducted when 
             //actually planting) give a visual indicator
@@ -138,7 +170,7 @@ public class PlotManager : MonoBehaviour
             }
         }
         //if selecting a tool
-        if (fm.isSelecting)
+        else if (fm.isSelecting)
         {
             switch(fm.selectedTool)
             {
@@ -194,34 +226,38 @@ public class PlotManager : MonoBehaviour
         //change the plot back to its dry state
         isDry = true;
         plot.sprite = drySprite;
-        //reset speed back to default
+        //reset stats back to default
         speed = 1f;
+        dryStage = -1;
     }
     void Plant(PlantObject newPlant)
     {
         selectedPlant = newPlant;
         isPlanted = true;
+        hasDeadPlant = false;
         //only deduct the money after planting
         fm.Transaction(-selectedPlant.buyPrice);
         plantStage = 0;
-        UpdatePlant(); //update sprite to match
+        //pick any stage excluding the first and last
+        dryStage = Random.Range(1, selectedPlant.plantStages.Length - 1);
+        //update sprite to match
+        UpdatePlant();
+        //if the empty plot wasn't watered before planting, display status icon (icon is only displyed when
+        //there's a plant
+        if (isDry)
+        {
+            sm.ChangeWaterIconDisplay(true);
+        }
         //set up timer
         timer = selectedPlant.timeBetweenStages;
-
+        //make the plant visible
         plant.gameObject.SetActive(true);
     }
 
     void UpdatePlant()
     {
-        if (isDry)
-        {
-            plant.sprite = selectedPlant.dryPlanted;
-        }
-        else
-        {
-            plant.sprite = selectedPlant.plantStages[plantStage];
-        }
-        //update collider size according to the current sprite and recalculate the offset so it's
+        plant.sprite = selectedPlant.plantStages[plantStage];
+        //update plant's collider size according to the current sprite and recalculate the offset so it's
         //always in the middle
         plantCollider.size = plant.sprite.bounds.size;
         plantCollider.offset = new Vector2(0, plant.bounds.size.y / 2);
