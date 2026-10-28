@@ -7,8 +7,8 @@ public class StoreManager : MonoBehaviour
     public GameObject plantItem;
     List<PlantObject> plantObjects = new List<PlantObject>();
 
-    public const int herbicidePrice = 10;
-    public const int pesticidePrice = 10;
+    public const int herbicidePrice = 5;
+    public const int pesticidePrice = 5;
     private void Awake()
     {
         var loadedPlants = Resources.LoadAll("Plants", typeof(PlantObject));

@@ -10,6 +10,8 @@ public class PlotManager : MonoBehaviour
     int plantStage = 0;
     //stage where the plant dries out, will be set when planting
     int dryStage;
+    int pestStage;
+    int weedStage;
     float timer;
     float speed = 1f;
 
@@ -23,10 +25,15 @@ public class PlotManager : MonoBehaviour
     //plot
     SpriteRenderer plot;
     bool isDry = true;
+    bool hasPest = false;
+    bool hasWeed = false;
     public bool isBought = true;
     public Sprite drySprite;
     public Sprite normalSprite;
     public Sprite unavailableSprite;
+
+    [SerializeField] private GameObject pest;
+    [SerializeField] private GameObject weed;
 
     PlantObject selectedPlant;
 
@@ -48,6 +55,8 @@ public class PlotManager : MonoBehaviour
         {
             plot.sprite = drySprite;
         }
+        weed.SetActive(false);
+        pest.SetActive(false);
     }
 
     // Update is called once per frame
@@ -63,8 +72,7 @@ public class PlotManager : MonoBehaviour
                 //plant dies if not watered before it reaches the next stage (and if not at the first stage
                 //so that multiple plants can be planted then watered at once without the time constraint 
                 //caused by this)
-                //TODO: when pests and weeds are implemented check for dryness pests and weeds at once here
-                if (isDry)
+                if (isDry || hasPest || hasWeed)
                 {
                     if (plantStage != 0)
                     {
@@ -78,16 +86,25 @@ public class PlotManager : MonoBehaviour
                     timer = selectedPlant.timeBetweenStages;
                     plantStage++;
                     UpdatePlant();
-                    //dry out the plot when the designated stage is reached
+                    //dry out the plot / add pest / add weed when the designated stage is reached
                     if (plantStage == dryStage)
                     {
                         isDry = true;
                         plot.sprite = drySprite;
                         sm.ChangeWaterIconDisplay(true);
                     }
-                    //TODO: when pests and weeds are implemented apply them the same way here, just give them
-                    //different rng varibles so they appear independant of each other
-                    //and toggle extra sprites along with status icons
+                    if (plantStage == pestStage)
+                    {
+                        hasPest = true;
+                        pest.SetActive(true);
+                        sm.ChangePestIconDisplay(true);
+                    }
+                    if (plantStage == weedStage)
+                    {
+                        hasWeed = true;
+                        weed.SetActive(true);
+                        sm.ChangeWeedIconDisplay(true);
+                    }
                 }
             }
         }
@@ -143,11 +160,14 @@ public class PlotManager : MonoBehaviour
                     }
                     break;
                 //herbicide
+                //does nothing if plot has no weed to prevent accidentally spending money
                 case 2:
-                    if (isBought && isPlanted && fm.money >= StoreManager.herbicidePrice)
+                    if (isBought && isPlanted && hasWeed && fm.money >= StoreManager.herbicidePrice)
                     {
                         fm.Transaction(-StoreManager.herbicidePrice);
-                        //TODO: apply herbicide effect here
+                        hasWeed = false;
+                        weed.SetActive(false);
+                        sm.ChangeWeedIconDisplay(false);
                     }
                     break;
                 //unlock new plot
@@ -162,11 +182,14 @@ public class PlotManager : MonoBehaviour
                     }
                     break;
                 //pesticide
+                //does nothing if plot has no weed to prevent accidentally spending money
                 case 4:
-                    if (isBought && isPlanted && fm.money >= StoreManager.pesticidePrice)
+                    if (isBought && isPlanted && hasPest && fm.money >= StoreManager.pesticidePrice)
                     {
                         fm.Transaction(-StoreManager.pesticidePrice);
-                        //TODO: apply pesticide effect here
+                        hasPest = false;
+                        pest.SetActive(false);
+                        sm.ChangePestIconDisplay(false);
                     }
                     break;
                 default:
@@ -219,9 +242,9 @@ public class PlotManager : MonoBehaviour
                         plot.color = unavailableColor;
                     }
                     break;
-                //herbicide (can't be used on empty plot)
+                //herbicide (can't be used on plots with no weeds)
                 case 2:
-                    if (isBought && isPlanted && fm.money >= StoreManager.herbicidePrice)
+                    if (isBought && isPlanted && hasWeed && fm.money >= StoreManager.herbicidePrice)
                     {
                         plot.color = availableColor;
                     }
@@ -241,9 +264,9 @@ public class PlotManager : MonoBehaviour
                         plot.color = unavailableColor;
                     }
                     break;
-                //pesticide (can't be used on empty plot)
+                //pesticide (can't be used on plots with no pests)
                 case 4:
-                    if (isBought && isPlanted && fm.money >= StoreManager.pesticidePrice)
+                    if (isBought && isPlanted && hasPest && fm.money >= StoreManager.pesticidePrice)
                     {
                         plot.color = availableColor;
                     }
@@ -270,15 +293,21 @@ public class PlotManager : MonoBehaviour
         plant.color = Color.white;
         plant.gameObject.SetActive(false);
         //set plot back to dry
-        //TODO: when pests and weeds are implemented change their status here like with isDry
         isDry = true;
         plot.sprite = drySprite;
+        //remove pests and weeds
+        hasPest = false;
+        pest.SetActive(false);
+        hasWeed = false;
+        weed.SetActive(false);
         //remove all statuses
         sm.ChangeWaterIconDisplay(false);
         sm.ChangePestIconDisplay(false);
         sm.ChangeWeedIconDisplay(false);
         //reset stats back to default
         dryStage = -1;
+        pestStage = -1;
+        weedStage = -1;
     }
     void Harvest()
     {
@@ -295,6 +324,18 @@ public class PlotManager : MonoBehaviour
         plantStage = 0;
         //pick any stage excluding the first and last
         dryStage = Random.Range(1, selectedPlant.plantStages.Length - 1);
+        //roll between will and won't have pest / weed, if will have, do another roll for the stage
+        //rate is currently 20%
+        pestStage = Random.Range(-3, 2);
+        if (pestStage == 1)
+        {
+            pestStage = Random.Range(1, selectedPlant.plantStages.Length - 1);
+        }
+        weedStage = Random.Range(-3, 2);
+        if (weedStage == 1)
+        {
+            weedStage = Random.Range(1, selectedPlant.plantStages.Length - 1);
+        }
         //update sprite to match
         UpdatePlant();
         //if the empty plot wasn't watered before planting, display status icon (icon is only displyed when
