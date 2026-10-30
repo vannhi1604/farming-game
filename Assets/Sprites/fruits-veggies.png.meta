@@ -3242,7 +3242,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fruits-veggies_24
+      name: watermelon_icon
       rect:
         serializedVersion: 2
         x: 705
@@ -4100,7 +4100,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fruits-veggies_66
+      name: purple_potato_icon
       rect:
         serializedVersion: 2
         x: 68
@@ -10678,7 +10678,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fruits-veggies_369
+      name: red_onion_icon
       rect:
         serializedVersion: 2
         x: 807
@@ -22179,7 +22179,6 @@ TextureImporter:
       fruits-veggies_236: 2867271970026322814
       fruits-veggies_237: 3021796948374298696
       fruits-veggies_238: 712268210152800728
-      fruits-veggies_24: -9092761112849181985
       fruits-veggies_240: -8745585312631151444
       fruits-veggies_241: -8035925802115520705
       fruits-veggies_242: -2857240386291522744
@@ -22320,7 +22319,6 @@ TextureImporter:
       fruits-veggies_366: 4594037811460886432
       fruits-veggies_367: -4111092080887144160
       fruits-veggies_368: 2615075985319652797
-      fruits-veggies_369: 9043332709204970607
       fruits-veggies_37: -4493079040375625026
       fruits-veggies_370: -3824738475537618363
       fruits-veggies_371: -4054079263671769336
@@ -22638,7 +22636,6 @@ TextureImporter:
       fruits-veggies_657: 6536891094184335170
       fruits-veggies_658: -5610294820243937996
       fruits-veggies_659: 7026187456075964233
-      fruits-veggies_66: 6996479511900098499
       fruits-veggies_660: 6268198769860156171
       fruits-veggies_661: 8554211987439961253
       fruits-veggies_662: 2009787026177312627
@@ -22904,10 +22901,13 @@ TextureImporter:
       gold_potato_icon: 5184729726212085889
       green_grape_icon: 2493057924273185067
       iceberg_lettuce_icon: 533344536498303833
+      purple_potato_icon: 6996479511900098499
       red_cabbage_icon: 1112657481510934006
+      red_onion_icon: 9043332709204970607
       snap_pea_icon: -8258255953197559886
       strawberry_icon: -3887963880064942914
       tomato_v2_icon: 5733415690998657875
+      watermelon_icon: -9092761112849181985
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
