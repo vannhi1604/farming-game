@@ -11,7 +11,7 @@ public class StoreManager : MonoBehaviour
     public const int pesticidePrice = 5;
     private void Awake()
     {
-        var loadedPlants = Resources.LoadAll("Plants", typeof(PlantObject));
+        var loadedPlants = Resources.LoadAll<PlantObject>("Plants");
         foreach(var plant in loadedPlants)
         {
             plantObjects.Add((PlantObject)plant);

@@ -38,6 +38,8 @@ public class PlotManager : MonoBehaviour
     PlantObject selectedPlant;
 
     FarmManager fm;
+
+    InventoryManager im;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,6 +48,7 @@ public class PlotManager : MonoBehaviour
         plantCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         fm = transform.parent.GetComponent<FarmManager>();
         sm = GetComponent<StatusManager>();
+        im = FindAnyObjectByType<InventoryManager>();
         plot = GetComponent<SpriteRenderer>();
         if (!isBought)
         {
@@ -312,7 +315,9 @@ public class PlotManager : MonoBehaviour
     void Harvest()
     {
         ResetPlot();
-        fm.Transaction(selectedPlant.sellPrice);
+        //switch to adding to inventory instead of immediately selling it
+        im.AddItem(selectedPlant.plantName, 1);
+        //fm.Transaction(selectedPlant.sellPrice);
     }
     void Plant(PlantObject newPlant)
     {

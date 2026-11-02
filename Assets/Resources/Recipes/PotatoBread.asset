@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df129887878528549a6d5c930df23132, type: 3}
+  m_Name: PotatoBread
+  m_EditorClassIdentifier: Assembly-CSharp::Recipe
+  recipeName: Potato Bread
+  icon: {fileID: -3087015473477039838, guid: de22c32c6e6149e44b8601b4e83467ef, type: 3}
+  ingredients:
+  - ingredient: {fileID: 11400000, guid: dcc717773d5a80c4dafc2a1ae1723310, type: 2}
+    amount: 3
