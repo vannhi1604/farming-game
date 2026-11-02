@@ -5,4 +5,5 @@ public class Ingredient : ScriptableObject
 {
     public string itemName;
     public Sprite icon;
+    public int sellPrice;
 }
