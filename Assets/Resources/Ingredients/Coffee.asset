@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ingredient
   itemName: Coffee
   icon: {fileID: -2664185249077367582, guid: c654ac2d9b382504e8fb98ebd7b35ff6, type: 3}
+  sellPrice: 1000

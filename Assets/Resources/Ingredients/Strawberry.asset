@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ingredient
   itemName: Strawberry
   icon: {fileID: -3887963880064942914, guid: c654ac2d9b382504e8fb98ebd7b35ff6, type: 3}
+  sellPrice: 260

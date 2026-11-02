@@ -9,13 +9,21 @@ public class InventoryItem : MonoBehaviour
     public Image icon;
     public TMP_Text amountTxt;
 
+    InventoryManager im;
+
     void Start()
     {
+        im = FindAnyObjectByType<InventoryManager>();
         InitializeUI();
     }
     void InitializeUI()
     {
         icon.sprite = item.icon;
         amountTxt.text = "x0";
+    }
+
+    public void SellItem()
+    {
+        im.SellItem(item.itemName);
     }
 }

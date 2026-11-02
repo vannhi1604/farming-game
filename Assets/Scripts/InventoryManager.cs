@@ -15,8 +15,12 @@ public class InventoryManager : MonoBehaviour
     //objects loaded, also a list of every item in game
     Ingredient[] loadedItems;
 
+    FarmManager fm;
+
     private void Awake()
     {
+        fm = FindAnyObjectByType<FarmManager>();
+
         loadedItems = Resources.LoadAll<Ingredient>("Ingredients");
         foreach (var item in loadedItems)
         {
@@ -60,6 +64,18 @@ public class InventoryManager : MonoBehaviour
         UpdateInventoryUI(ingredient.itemName, inventory[ingredient]);
 
         return true;
+    }
+
+    //sell all stocks of the item
+    public void SellItem(string itemName)
+    {
+        Ingredient ingredient = loadedItems.FirstOrDefault(
+            item => item.itemName == itemName
+        );
+
+        fm.Transaction(inventory[ingredient] * ingredient.sellPrice);
+
+        RemoveItem(ingredient, inventory[ingredient]);
     }
 
     public void UpdateInventoryUI(string name, int amount)

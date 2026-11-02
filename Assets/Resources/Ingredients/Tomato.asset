@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ingredient
   itemName: Tomato
   icon: {fileID: 5733415690998657875, guid: c654ac2d9b382504e8fb98ebd7b35ff6, type: 3}
+  sellPrice: 130

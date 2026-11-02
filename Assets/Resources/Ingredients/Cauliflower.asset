@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ingredient
   itemName: Cauliflower
   icon: {fileID: 2892426539196253618, guid: c654ac2d9b382504e8fb98ebd7b35ff6, type: 3}
+  sellPrice: 80
