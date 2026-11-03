@@ -13,5 +13,8 @@ public class Recipe : ScriptableObject
 {
     public string recipeName;
     public Sprite icon;
+    public float timeTaken; // in seconds
+    public int sellPrice;
+    //note that current UI can only display max 3 ingredients
     public List<IngredientAmount> ingredients = new List<IngredientAmount>();
 }

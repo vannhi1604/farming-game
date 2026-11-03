@@ -14,7 +14,7 @@ public class StoreManager : MonoBehaviour
         var loadedPlants = Resources.LoadAll<PlantObject>("Plants");
         foreach(var plant in loadedPlants)
         {
-            plantObjects.Add((PlantObject)plant);
+            plantObjects.Add(plant);
         }
         plantObjects.Sort(SortByPrice);
         foreach (var plant in plantObjects)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -22,6 +23,7 @@ public class InventoryManager : MonoBehaviour
         fm = FindAnyObjectByType<FarmManager>();
 
         loadedItems = Resources.LoadAll<Ingredient>("Ingredients");
+        Array.Sort(loadedItems, SortByPrice);
         foreach (var item in loadedItems)
         {
             inventory.Add(item, 0);
@@ -30,6 +32,7 @@ public class InventoryManager : MonoBehaviour
         {
             InventoryItem newItem = Instantiate(inventoryItem, transform).GetComponent<InventoryItem>();
             newItem.item = item.Key;
+            newItem.amountTxt.text = "x" + item.Value;
             itemsUI.Add(newItem);
         }
     }
@@ -78,12 +81,17 @@ public class InventoryManager : MonoBehaviour
         RemoveItem(ingredient, inventory[ingredient]);
     }
 
-    public void UpdateInventoryUI(string name, int amount)
+    void UpdateInventoryUI(string name, int amount)
     {
         int targetIndex = System.Array.FindIndex(
             loadedItems,
             item => item.itemName == name
         );
         itemsUI[targetIndex].amountTxt.text = "x" + amount;
+    }
+
+    int SortByPrice(Ingredient a, Ingredient b)
+    {
+        return a.sellPrice.CompareTo(b.sellPrice);
     }
 }
