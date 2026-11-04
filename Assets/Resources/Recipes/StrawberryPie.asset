@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Recipe
   recipeName: Strawberry Pie
   icon: {fileID: 2211937839951244587, guid: de22c32c6e6149e44b8601b4e83467ef, type: 3}
+  timeTaken: 20
+  sellPrice: 800
   ingredients:
   - ingredient: {fileID: 11400000, guid: e112258e627a1364695096e30ed23397, type: 2}
     amount: 3

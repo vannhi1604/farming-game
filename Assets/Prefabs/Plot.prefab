@@ -425,6 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3192347135595398827}
   - component: {fileID: 1555394458994147566}
+  - component: {fileID: 8895552842186491067}
   - component: {fileID: 4794562911214264436}
   - component: {fileID: 5560672172040186483}
   - component: {fileID: 1675377087273803818}
@@ -518,6 +519,103 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!82 &8895552842186491067
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602217157032349172}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &4794562911214264436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,6 +638,11 @@ MonoBehaviour:
   unavailableSprite: {fileID: -5737574994739756139, guid: 7183bb8df7eaf8e4fbfae8ccf25625ee, type: 3}
   pest: {fileID: 572581536004599984}
   weed: {fileID: 1646910822113261046}
+  plantSound: {fileID: 8300000, guid: 0513fbd19383fe944bd4c3e489ce0ba5, type: 3}
+  harvestSound: {fileID: 8300000, guid: 93ea3d7345ce4d84a9c9fa719f9040c6, type: 3}
+  wateringSound: {fileID: 8300000, guid: 061dc7acb8abf0744a75ac9ba717648e, type: 3}
+  herbipestiSound: {fileID: 8300000, guid: 3f4000182fde8b443babfb5d01a8e983, type: 3}
+  unlockPlotSound: {fileID: 8300000, guid: 0a2af3f3c5eb55e4285b40a22121be54, type: 3}
 --- !u!114 &5560672172040186483
 MonoBehaviour:
   m_ObjectHideFlags: 0

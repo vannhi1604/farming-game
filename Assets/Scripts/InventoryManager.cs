@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -18,9 +19,15 @@ public class InventoryManager : MonoBehaviour
 
     FarmManager fm;
 
+    //audio
+    AudioSource audioSource;
+    [SerializeField] private AudioClip sellSound;
+
     private void Awake()
     {
         fm = FindAnyObjectByType<FarmManager>();
+
+        audioSource = GetComponent<AudioSource>();
 
         loadedItems = Resources.LoadAll<Ingredient>("Ingredients");
         Array.Sort(loadedItems, SortByPrice);
@@ -76,9 +83,15 @@ public class InventoryManager : MonoBehaviour
             item => item.itemName == itemName
         );
 
-        fm.Transaction(inventory[ingredient] * ingredient.sellPrice);
+        if (inventory[ingredient] > 0)
+        {
+            fm.Transaction(inventory[ingredient] * ingredient.sellPrice);
 
-        RemoveItem(ingredient, inventory[ingredient]);
+            //play sound effect
+            audioSource.PlayOneShot(sellSound);
+
+            RemoveItem(ingredient, inventory[ingredient]);
+        }
     }
 
     void UpdateInventoryUI(string name, int amount)

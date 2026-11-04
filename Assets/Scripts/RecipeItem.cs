@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class RecipeItem : MonoBehaviour
 {
@@ -31,9 +29,16 @@ public class RecipeItem : MonoBehaviour
 
     List<InventoryItem> itemsUI = new List<InventoryItem>();
 
+    //audio
+    AudioSource audioSource;
+    [SerializeField] private AudioClip kitchenSound;
+    [SerializeField] private AudioClip sellSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         im = FindAnyObjectByType<InventoryManager>();
         fm = FindAnyObjectByType<FarmManager>();
 
@@ -71,6 +76,8 @@ public class RecipeItem : MonoBehaviour
         if (making == false && claimable == false)
         {
             Make();
+            //play sound effect
+            audioSource.PlayOneShot(kitchenSound);
         }
         //if ready to claim, claim it and sell it
         else if (making == false && claimable == true)
@@ -81,6 +88,9 @@ public class RecipeItem : MonoBehaviour
 
             btnImage.color = Color.green;
             btnTxt.text = "Make";
+
+            //play sound effect
+            audioSource.PlayOneShot(sellSound);
         }
     }
 

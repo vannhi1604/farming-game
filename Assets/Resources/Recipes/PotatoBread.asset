@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Recipe
   recipeName: Potato Bread
   icon: {fileID: -3087015473477039838, guid: de22c32c6e6149e44b8601b4e83467ef, type: 3}
+  timeTaken: 20
+  sellPrice: 400
   ingredients:
   - ingredient: {fileID: 11400000, guid: dcc717773d5a80c4dafc2a1ae1723310, type: 2}
     amount: 3

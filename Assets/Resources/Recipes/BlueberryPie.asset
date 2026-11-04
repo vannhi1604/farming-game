@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Recipe
   recipeName: Blueberry Pie
   icon: {fileID: 4605157701938335613, guid: de22c32c6e6149e44b8601b4e83467ef, type: 3}
+  timeTaken: 20
+  sellPrice: 2300
   ingredients:
-  - ingredient: {fileID: 0}
-    amount: 0
+  - ingredient: {fileID: 11400000, guid: 813454ccf6b467044b104b487bfcdc7f, type: 2}
+    amount: 3

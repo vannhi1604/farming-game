@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
@@ -31,9 +32,16 @@ public class FarmManager : MonoBehaviour
     public Image[] buttonsImg;
     public Sprite normalButton;
     public Sprite selectedButton;
+
+    //audio
+    AudioSource audioSource;
+    [SerializeField] private AudioClip clickSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         moneyTxt.text = "$" + money;
         plotPriceTxt.text = "$" + currentPlotPrice;
     }
@@ -58,6 +66,9 @@ public class FarmManager : MonoBehaviour
             selectedPlant.btnTxt.text = "Cancel";
             isPlanting = true;
             Debug.Log("selected " + selectedPlant.plant.plantName);
+
+            //play sound effect
+            audioSource.PlayOneShot(clickSound);
         }
     }
 
@@ -73,6 +84,9 @@ public class FarmManager : MonoBehaviour
             isSelecting = true;
             selectedTool = toolNumber;
             buttonsImg[toolNumber - 1].sprite = selectedButton;
+
+            //play sound effect
+            audioSource.PlayOneShot(clickSound);
         }
     }
 

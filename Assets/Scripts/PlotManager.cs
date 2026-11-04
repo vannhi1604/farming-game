@@ -40,7 +40,15 @@ public class PlotManager : MonoBehaviour
     FarmManager fm;
 
     InventoryManager im;
-    
+
+    //audio
+    AudioSource audioSource;
+    [SerializeField] private AudioClip plantSound;
+    [SerializeField] private AudioClip harvestSound;
+    [SerializeField] private AudioClip wateringSound;
+    [SerializeField] private AudioClip herbipestiSound;
+    [SerializeField] private AudioClip unlockPlotSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,6 +58,7 @@ public class PlotManager : MonoBehaviour
         sm = GetComponent<StatusManager>();
         im = FindAnyObjectByType<InventoryManager>();
         plot = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         if (!isBought)
         {
             plot.sprite = unavailableSprite;
@@ -140,7 +149,12 @@ public class PlotManager : MonoBehaviour
                 else
                 {
                     fm.ResetSelection();
+
+                    //play sound effect
+                    audioSource.volume = 1f;
+                    audioSource.PlayOneShot(harvestSound);
                 }
+
                 return;
             }
         }
@@ -160,6 +174,10 @@ public class PlotManager : MonoBehaviour
                         isDry = false;
                         plot.sprite = normalSprite;
                         sm.ChangeWaterIconDisplay(false);
+
+                        //play sound effect
+                        audioSource.volume = 0.1f;
+                        audioSource.PlayOneShot(wateringSound);
                     }
                     break;
                 //herbicide
@@ -169,8 +187,13 @@ public class PlotManager : MonoBehaviour
                     {
                         fm.Transaction(-StoreManager.herbicidePrice);
                         hasWeed = false;
+
                         weed.SetActive(false);
                         sm.ChangeWeedIconDisplay(false);
+
+                        //play sound effect
+                        audioSource.volume = 0.4f;
+                        audioSource.PlayOneShot(herbipestiSound);
                     }
                     break;
                 //unlock new plot
@@ -180,8 +203,13 @@ public class PlotManager : MonoBehaviour
                         fm.Transaction(-fm.currentPlotPrice);
                         fm.increasePlotPrice();
                         isBought = true;
+
                         plot.sprite = drySprite;
                         isDry = true;
+
+                        //play sound effect
+                        audioSource.volume = 0.1f;
+                        audioSource.PlayOneShot(unlockPlotSound);
                     }
                     break;
                 //pesticide
@@ -191,8 +219,13 @@ public class PlotManager : MonoBehaviour
                     {
                         fm.Transaction(-StoreManager.pesticidePrice);
                         hasPest = false;
+
                         pest.SetActive(false);
                         sm.ChangePestIconDisplay(false);
+
+                        //play sound effect
+                        audioSource.volume = 0.4f;
+                        audioSource.PlayOneShot(herbipestiSound);
                     }
                     break;
                 default:
@@ -318,6 +351,9 @@ public class PlotManager : MonoBehaviour
         //switch to adding to inventory instead of immediately selling it
         im.AddItem(selectedPlant.plantName, 1);
         //fm.Transaction(selectedPlant.sellPrice);
+        //play sound effect
+        audioSource.volume = 1f;
+        audioSource.PlayOneShot(harvestSound);
     }
     void Plant(PlantObject newPlant)
     {
@@ -353,6 +389,9 @@ public class PlotManager : MonoBehaviour
         timer = selectedPlant.timeBetweenStages;
         //make the plant visible
         plant.gameObject.SetActive(true);
+        //play sound effect
+        audioSource.volume = 1f;
+        audioSource.PlayOneShot(plantSound);
     }
 
     void UpdatePlant()
