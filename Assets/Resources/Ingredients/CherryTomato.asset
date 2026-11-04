@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f118d1c789118145bbe94237eb9d830, type: 3}
   m_Name: CherryTomato
   m_EditorClassIdentifier: Assembly-CSharp::Ingredient
-  itemName: CherryTomato
+  itemName: Cherry Tomato
   icon: {fileID: -78377841586495772, guid: c654ac2d9b382504e8fb98ebd7b35ff6, type: 3}
   sellPrice: 50
